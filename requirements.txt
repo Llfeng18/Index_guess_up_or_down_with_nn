@@ -1,0 +1,12 @@
+akshare==1.14.1
+chinese_calendar==1.9.0
+chinesecalendar==1.9.0
+lxml==4.9.2
+matplotlib==3.7.2
+numpy==1.23.5
+pandas==2.0.3
+tensorflow==2.15.0
+tensorflow_intel==2.15.0
+torch==2.3.0+cu118
+tqdm==4.64.1
+transformers==4.36.2
