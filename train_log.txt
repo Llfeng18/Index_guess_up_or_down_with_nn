@@ -1,0 +1,170 @@
+total_batch_size = 65536
+batch_size = 65536
+input_size = 121
+hidden_size = 512
+n_head = 2
+output_size = 2
+num_hidden_layers = 20
+learning_rate = 2e-3
+train_num_epochs = 10
+max_load_data = 20000000
+# max_load_data = 65536
+weight_decay_rate = 0.0
+model_type = "MLP"  # MLP, MLP_Residual, MLP_Tanh, RNN, GRU, LSTM, Transformer
+Data_norm_rate = 100000000.0
+dummy_class = 0
+load_model_name = ""
+
+
+using device: cuda
+load_data train_loader:30 test_loader:1 val_loader:1
+number of parameters: 5.054075M
+initial test:31.31% , val:34.29% , T_max:300
+Epoch [1/10], Loss: 1.3075, norm: 14.3202 , train:57.53% , test:70.59% , val:75.00% , time0:00:41.028667
+Epoch [2/10], Loss: 0.4655, norm: 0.5881 , train:79.02% , test:81.19% , val:83.57% , time0:00:59.348763
+Epoch [3/10], Loss: 0.4265, norm: 0.2040 , train:80.35% , test:80.78% , val:82.14% , time0:00:59.466991
+Epoch [4/10], Loss: 0.4143, norm: 0.3302 , train:80.97% , test:80.63% , val:80.71% , time0:00:58.242990
+Epoch [5/10], Loss: 0.3992, norm: 0.3649 , train:82.01% , test:79.22% , val:80.71% , time0:00:27.542441
+Epoch [6/10], Loss: 0.3822, norm: 0.4724 , train:83.19% , test:79.10% , val:79.29% , time0:00:39.466620
+Epoch [7/10], Loss: 0.3601, norm: 0.7655 , train:84.43% , test:78.07% , val:78.57% , time0:00:57.905904
+Epoch [8/10], Loss: 0.3406, norm: 0.5912 , train:85.40% , test:77.22% , val:80.71% , time0:00:57.956504
+Epoch [9/10], Loss: 0.3298, norm: 0.5358 , train:85.93% , test:77.49% , val:79.29% , time0:00:57.614503
+Epoch [10/10], Loss: 0.3257, norm: 0.2483 , train:86.15% , test:77.29% , val:78.57% , time0:00:58.138344
+
+
+
+total_batch_size = 65536
+batch_size = 16384
+input_size = 121
+hidden_size = 256
+n_head = 2
+output_size = 2
+num_hidden_layers = 1
+learning_rate = 2e-3
+train_num_epochs = 10
+max_load_data = 20000000
+# max_load_data = 65536
+weight_decay_rate = 0.0
+model_type = "RNN"  # MLP, MLP_Residual, MLP_Tanh, RNN, GRU, LSTM, Transformer
+Data_norm_rate = 100000000.0
+dummy_class = 0
+load_model_name = ""
+
+
+using device: cuda
+load_data train_loader:120 test_loader:3 val_loader:1
+number of parameters: 0.066818M
+initial test:80.44% , val:84.29% , T_max:300
+Epoch [1/10], Loss: 0.1241, norm: 0.1252 , train:80.43% , test:81.06% , val:84.29% , time0:01:06.335388
+Epoch [2/10], Loss: 0.1233, norm: 0.0594 , train:80.44% , test:81.05% , val:84.29% , time0:01:06.559862
+Epoch [3/10], Loss: 0.1233, norm: 0.2536 , train:80.45% , test:81.06% , val:84.29% , time0:01:06.895148
+Epoch [4/10], Loss: 0.1233, norm: 0.1105 , train:80.45% , test:81.05% , val:84.29% , time0:01:06.595894
+Epoch [5/10], Loss: 0.1234, norm: 0.0916 , train:80.45% , test:81.06% , val:84.29% , time0:01:06.321832
+Epoch [6/10], Loss: 0.1233, norm: 0.0591 , train:80.45% , test:81.06% , val:84.29% , time0:01:06.053291
+Epoch [7/10], Loss: 0.1233, norm: 0.0423 , train:80.45% , test:81.06% , val:84.29% , time0:01:05.925029
+Epoch [8/10], Loss: 0.1231, norm: 0.0156 , train:80.45% , test:81.06% , val:84.29% , time0:01:06.459463
+Epoch [9/10], Loss: 0.1232, norm: 0.0077 , train:80.45% , test:81.06% , val:84.29% , time0:01:07.805280
+Epoch [10/10], Loss: 0.1232, norm: 0.0095 , train:80.45% , test:81.06% , val:84.29% , time0:01:06.662861
+
+
+total_batch_size = 65536
+batch_size = 65536
+input_size = 121
+hidden_size = 128
+n_head = 2
+output_size = 2
+num_hidden_layers = 1
+learning_rate = 5e-3
+train_num_epochs = 10
+max_load_data = 20000000
+# max_load_data = 65536
+weight_decay_rate = 0.0
+model_type = "GRU"  # MLP, MLP_Residual, MLP_Tanh, RNN, GRU, LSTM, Transformer
+Data_norm_rate = 1000000.0
+dummy_class = 0
+load_model_name = ""
+
+
+using device: cuda
+load_data train_loader:30 test_loader:1 val_loader:1
+number of parameters: 0.050562M
+initial test:36.84% , val:40.00% , T_max:300
+Epoch [1/10], Loss: 0.5292, norm: 1.3916 , train:75.73% , test:81.08% , val:84.29% , time0:01:28.971672
+Epoch [2/10], Loss: 0.4699, norm: 1.0883 , train:80.39% , test:81.04% , val:84.29% , time0:01:31.728192
+Epoch [3/10], Loss: 0.4566, norm: 1.7269 , train:80.43% , test:81.07% , val:84.29% , time0:01:30.509310
+Epoch [4/10], Loss: 0.4459, norm: 1.8768 , train:80.44% , test:81.07% , val:84.29% , time0:01:27.581864
+Epoch [5/10], Loss: 0.4420, norm: 2.3877 , train:80.44% , test:81.05% , val:84.29% , time0:01:27.507653
+Epoch [6/10], Loss: 0.4391, norm: 2.1108 , train:80.45% , test:81.05% , val:84.29% , time0:01:27.629009
+Epoch [7/10], Loss: 0.4377, norm: 2.0421 , train:80.46% , test:81.06% , val:84.29% , time0:01:27.551605
+Epoch [8/10], Loss: 0.4356, norm: 1.7379 , train:80.46% , test:81.04% , val:84.29% , time0:01:27.659314
+Epoch [9/10], Loss: 0.4345, norm: 1.0753 , train:80.48% , test:81.05% , val:84.29% , time0:01:27.629453
+Epoch [10/10], Loss: 0.4342, norm: 1.0236 , train:80.48% , test:81.03% , val:84.29% , time0:01:27.524791
+
+
+
+total_batch_size = 65536
+batch_size = 32768
+input_size = 121
+hidden_size = 128
+n_head = 2
+output_size = 2
+num_hidden_layers = 1
+learning_rate = 4e-3
+train_num_epochs = 10
+max_load_data = 20000000
+# max_load_data = 65536
+weight_decay_rate = 0.0
+model_type = "LSTM"  # MLP, MLP_Residual, MLP_Tanh, RNN, GRU, LSTM, Transformer
+Data_norm_rate = 100000000.0
+dummy_class = 0
+load_model_name = ""
+
+
+using device: cuda
+load_data train_loader:60 test_loader:2 val_loader:1
+number of parameters: 0.06733M
+initial test:51.61% , val:56.43% , T_max:300
+Epoch [1/10], Loss: 0.2522, norm: 0.3249 , train:78.29% , test:81.05% , val:84.29% , time0:01:56.935079
+Epoch [2/10], Loss: 0.2378, norm: 0.1264 , train:80.45% , test:81.05% , val:84.29% , time0:01:56.474433
+Epoch [3/10], Loss: 0.2368, norm: 0.1464 , train:80.45% , test:81.06% , val:84.29% , time0:01:57.016196
+Epoch [4/10], Loss: 0.2355, norm: 0.1678 , train:80.45% , test:81.07% , val:84.29% , time0:01:57.196446
+Epoch [5/10], Loss: 0.2356, norm: 0.0421 , train:80.45% , test:81.06% , val:84.29% , time0:01:57.374487
+Epoch [6/10], Loss: 0.2357, norm: 0.2529 , train:80.45% , test:81.06% , val:84.29% , time0:01:57.043888
+Epoch [7/10], Loss: 0.2357, norm: 0.0522 , train:80.45% , test:81.06% , val:84.29% , time0:01:57.149403
+Epoch [8/10], Loss: 0.2354, norm: 0.0258 , train:80.45% , test:81.06% , val:84.29% , time0:01:56.933238
+Epoch [9/10], Loss: 0.2352, norm: 0.1000 , train:80.45% , test:81.06% , val:84.29% , time0:02:00.242601
+Epoch [10/10], Loss: 0.2353, norm: 0.0067 , train:80.45% , test:81.06% , val:84.29% , time0:02:02.269579
+
+
+
+
+total_batch_size = 65536
+batch_size = 16384
+input_size = 121
+hidden_size = 128
+n_head = 2
+output_size = 2
+num_hidden_layers = 1
+learning_rate = 4e-3
+train_num_epochs = 10
+max_load_data = 20000000
+# max_load_data = 65536
+weight_decay_rate = 0.0
+model_type = "Transformer"  # MLP, MLP_Residual, MLP_Tanh, RNN, GRU, LSTM, Transformer
+Data_norm_rate = 100000000.0
+dummy_class = 0
+load_model_name = ""
+
+load_data train_loader:120 test_loader:3 val_loader:1
+number of parameters: 0.214528M
+initial test:81.06% , val:84.29% , T_max:300
+Epoch [1/10], Loss: 0.1267, norm: 0.1987 , train:80.43% , test:81.06% , val:84.29% , time0:02:49.097220
+Epoch [2/10], Loss: 0.1233, norm: 0.0433 , train:80.45% , test:81.06% , val:84.29% , time0:02:49.409123
+Epoch [3/10], Loss: 0.1232, norm: 0.0168 , train:80.45% , test:81.06% , val:84.29% , time0:02:49.629943
+Epoch [4/10], Loss: 0.1231, norm: 0.0075 , train:80.45% , test:81.06% , val:84.29% , time0:02:49.678205
+Epoch [5/10], Loss: 0.1230, norm: 0.0083 , train:80.45% , test:81.05% , val:84.29% , time0:02:49.698086
+Epoch [6/10], Loss: 0.1230, norm: 0.0055 , train:80.45% , test:81.04% , val:84.29% , time0:02:49.680972
+Epoch [7/10], Loss: 0.1229, norm: 0.0088 , train:80.45% , test:81.04% , val:84.29% , time0:02:49.695255
+Epoch [8/10], Loss: 0.1229, norm: 0.0061 , train:80.45% , test:81.04% , val:84.29% , time0:02:49.700038
+Epoch [9/10], Loss: 0.1228, norm: 0.0058 , train:80.45% , test:81.05% , val:84.29% , time0:02:49.686540
+Epoch [10/10], Loss: 0.1229, norm: 0.0061 , train:80.45% , test:81.05% , val:84.29% , time0:02:49.659603

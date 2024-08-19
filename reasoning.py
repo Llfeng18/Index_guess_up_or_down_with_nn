@@ -13,6 +13,7 @@ import json
 import csv
 import os
 import time
+
 import model as my_model
 
 os.environ['NO_PROXY'] = 'finance.sina.com.cn'
@@ -21,17 +22,16 @@ device = torch.device("cpu")
 batch_size = 65536
 input_size = 121
 hidden_size = 512
+n_head = 2
 output_size = 2
 num_hidden_layers = 20
 learning_rate = 2e-3
-num_epochs = 100
+train_num_epochs = 10
 max_load_data = 20000000
 # max_load_data = 65536
 weight_decay_rate = 0.0
-model_type = "MLP"  # MLP, MLP_Residual, MLP_Tanh, RNN, GRU, LSTM
-is_used_loccode = True
-is_used_Data_norm = True
-model_name = 'MLP_e_4_tiran_80.5_test_81.6_val_85.7_is_121_hs_512_nh_20_bs_65536_lr_0.002_wd_0.0_ds_20000000_model_weights.bin'
+model_type = "MLP"  # MLP, MLP_Residual, MLP_Tanh, RNN, GRU, LSTM, Transformer
+model_name = 'MLP_e_2_tiran_79.02_test_81.19_val_83.57_bs_65536_as_1.0_is_121_hs_512_nh_2_os_2_nhl_20_lr_0.002_wd_0.0_ds_20000000_model_weights.bin'
 index_name_list = ["sh000001", "sz399808"]
 
 def pre_process(get_roll_yield_bar_df):
@@ -42,19 +42,16 @@ def pre_process(get_roll_yield_bar_df):
         if nowday.month == today.month and nowday.day == today.day:
             if (i + 119) <= len(get_roll_yield_bar_df):
                 nowday_noon = datetime.datetime.strptime(get_roll_yield_bar_df.iloc[i + 119][0], '%Y-%m-%d %H:%M:%S')
-                # print(nowday_noon)
                 if nowday.hour == 9 and nowday.minute == 31 and nowday_noon.hour == 11 and nowday_noon.minute == 30:
                     exponential_list.extend(get_roll_yield_bar_df.iloc[i - 1:i + 120, 4])
                     if (i + 238) <= len(get_roll_yield_bar_df):
                         nowday_pm = datetime.datetime.strptime(get_roll_yield_bar_df.iloc[i + 238][0], '%Y-%m-%d %H:%M:%S')
-                        # print(nowday_pm)
                         if nowday_pm.hour == 15 and nowday_pm.minute == 0:
                             if float(exponential_list[0]) > float(get_roll_yield_bar_df.iloc[i + 238][4]):
                                 label = 1
                             else:
                                 label = 0
             break
-    # print(f"len {len(exponential_list)} get_roll_yield_bar_df {exponential_list}")
     if len(exponential_list) == 121:
         pre_process_exponential = []
         base = float(exponential_list[0])
@@ -83,24 +80,19 @@ if __name__ == '__main__':
     msg = ""
     i = 0
     today = datetime.date.today()
-    # today = today - datetime.timedelta(days=2)
+    today = today - datetime.timedelta(days=2)
     if isTradeDay(today):
         msg = msg + str(today) + "\n"
-        model = my_model.init_model(model_type, input_size, hidden_size, output_size, num_hidden_layers, device)
-
+        model = my_model.init_model(model_type, input_size, hidden_size, output_size, num_hidden_layers, n_head, device)
         model.load_state_dict(torch.load('./model/' + model_name))
 
         for index_name in index_name_list:
-            # print(index_name)
             get_roll_yield_bar_df = ak.stock_zh_a_minute(symbol=index_name, period="1")
-            # print(get_roll_yield_bar_df)
             is_valid, exponential_tensor, exponential_list, label = pre_process(get_roll_yield_bar_df)
             if is_valid:
-                # print(f"len {len(exponential_tensor)} exponential_tensor {exponential_tensor}")
                 outputs = model(exponential_tensor)
-                result = torch.softmax(outputs, dim=0)
-                _, predicted = torch.max(outputs, 0)
-                # print(f"outputs {outputs} predicted {predicted} label {label}")
+                result = torch.softmax(outputs[0], dim=0)
+                _, predicted = torch.max(outputs[0], 0)
                 is_coincident = False
                 if (result[0] > result[1] and exponential_tensor[-1] > 0) or (result[0] < result[1] and exponential_tensor[-1] < 0):
                     is_coincident = True
@@ -117,5 +109,4 @@ if __name__ == '__main__':
         print(msg)
     else:
         print(f"today {str(today)} is not TradeDay")
-
 

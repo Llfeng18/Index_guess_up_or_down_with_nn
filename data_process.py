@@ -47,7 +47,7 @@ class MyDatasetLoader(Dataset):
         label = torch.tensor(self.labels[idx])
         return sample, label
 
-def load_data(data_dir, max_load_data, is_used_Data_norm, is_used_loccode):
+def load_data(data_dir, max_load_data):
     loaded_list = []
     with open(data_dir, 'r') as f:
         reader = csv.reader(f)
@@ -58,16 +58,6 @@ def load_data(data_dir, max_load_data, is_used_Data_norm, is_used_loccode):
                     int(float(row[0])) == 0):
                 tmp_row = row[0:121] + row[241:247]
                 loaded_list.append(tmp_row)
-
-    for i in range(len(loaded_list)):
-        if is_used_Data_norm:
-            base = float(loaded_list[i][0])
-            for j in range(0, 121):
-                index = float(loaded_list[i][j])
-                if is_used_loccode:
-                    loaded_list[i][j] = str(int((index - base) * 1000000 / base + j * 10))
-                else:
-                    loaded_list[i][j] = str(int((index - base) * 1000000 / base))
 
     return loaded_list
 
@@ -97,38 +87,30 @@ class data_prefetcher():
         self.preload()
         return input, target
 
-def get_loader(max_load_data, is_used_Data_norm, is_used_loccode, batch_size, is_Test):
-    pre_process_file_dir = "D:/data/stock_market/Index/"
-    train_file = "pre_process_train.csv"
-    test_file = "pre_process_test.csv"
-    val_file = "pre_process_val.csv"
+def get_loader(pre_process_file_dir, file, max_load_data, batch_size, is_Test):
 
-    test_loaded_list = load_data(pre_process_file_dir + test_file, max_load_data, is_used_Data_norm, is_used_loccode)
-    if is_Test:
-        test_dataset = MyDatasetLoader_Tset(len(test_loaded_list), np.array(test_loaded_list))
-    else:
-        test_dataset = MyDatasetLoader(len(test_loaded_list), np.array(test_loaded_list))
-    del test_loaded_list
+    file = file + '.csv'
+    loaded_list = load_data(pre_process_file_dir + file, max_load_data)
 
-    val_loaded_list = load_data(pre_process_file_dir + val_file, max_load_data, is_used_Data_norm, is_used_loccode)
     if is_Test:
-        val_dataset = MyDatasetLoader_Tset(len(val_loaded_list), np.array(val_loaded_list))
+        dataset = MyDatasetLoader_Tset(len(loaded_list), np.array(loaded_list))
     else:
-        val_dataset = MyDatasetLoader(len(val_loaded_list), np.array(val_loaded_list))
-    del val_loaded_list
+        dataset = MyDatasetLoader(len(loaded_list), np.array(loaded_list))
+    del loaded_list
 
-    train_loaded_list = load_data(pre_process_file_dir + train_file, max_load_data, is_used_Data_norm, is_used_loccode)
-    if is_Test:
-        train_dataset = MyDatasetLoader_Tset(len(train_loaded_list), np.array(train_loaded_list))
-    else:
-        train_dataset = MyDatasetLoader(len(train_loaded_list), np.array(train_loaded_list))
-    del train_loaded_list
+    loader = DataLoader(dataset, batch_size=batch_size, shuffle=True, pin_memory=True)
+    del dataset
     gc.collect()
 
+    return loader
+
+def get_loader_all(pre_process_file_dir, train_file, test_file, val_file, max_load_data, batch_size, is_Test):
+
     # 创建数据加载器
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, pin_memory=True)
-    test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, pin_memory=True)
-    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, pin_memory=True)
-    print("load_data success")
+    train_loader = get_loader(pre_process_file_dir, train_file, max_load_data, batch_size, is_Test)
+    test_loader = get_loader(pre_process_file_dir, test_file, max_load_data, batch_size, is_Test)
+    val_loader = get_loader(pre_process_file_dir, val_file, max_load_data, batch_size, is_Test)
+    print(f"load_data train_loader:{len(train_loader)} test_loader:{len(test_loader)} "
+          f"val_loader:{len(val_loader)}")
 
     return train_loader, test_loader, val_loader
